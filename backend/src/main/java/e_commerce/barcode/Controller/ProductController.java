@@ -51,7 +51,7 @@ public class ProductController {
         return productService.saveProduct(product);
     }*/
 
-    @PostMapping("/add")
+    @PostMapping("/addProduct")
     public ResponseEntity<?> addProduct(@RequestBody Products product) {
         if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
             Optional<Category> categoryOptional = categoryRepository.findById(product.getCategory().getCategoryId());
