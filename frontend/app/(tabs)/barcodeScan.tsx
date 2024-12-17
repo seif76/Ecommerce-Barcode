@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import { Camera,CameraView, CameraType, BarcodeScanningResult } from "expo-camera";
@@ -92,3 +93,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+*/
