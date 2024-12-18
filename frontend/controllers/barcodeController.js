@@ -1,17 +1,33 @@
 import axios from "axios";
 
 // Base URL for your backend API (replace with your backend URL)
-const API_BASE_URL = "http://localhost:8081/api/products";
+const API_BASE_URL = "http://192.168.1.11:8081/api/products";
+//http://localhost:8081/api/products/
 
 // Function to get product details by barcode
 export const getProductByBarcode = async (barcode) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${barcode}`);
+    const response = await axios.get(`${API_BASE_URL}/${barcode}`,{
+    headers: {
+        "Content-Type": "application/json", // Ensures JSON communication
+        "Accept": "application/json", // Ensures the server sends JSON responses
+        
+      },
+     
+      timeout: 10000, // Optional timeout (10 seconds)
+      
+    });
+    console.log(response.status);
+
     return response.data; // Return the product details
   } catch (error) {
-    console.error("Error fetching product by barcode:", error);
+    console.log("Error fetching product by barcode:", error);
+    if (error.response.status === 404) {
+        console.log("Product not found (404).");
+    }else{
     throw error; // Re-throw the error to handle it in your component
-  }
+    }  
+}
 };
 
 // Other APIs you might need

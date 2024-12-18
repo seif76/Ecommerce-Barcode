@@ -21,7 +21,7 @@ export default function BarcodeScan() {
     getCameraPermissions();
   }, []);
 
-  const handleBarcodeScanned = ({ type, data }) => {
+  /*const handleBarcodeScanned = ({ type, data }) => {
     setScanned(true);
     
     /*Alert.alert(
@@ -38,13 +38,33 @@ export default function BarcodeScan() {
         cancelable: true,
       }
     );*/
-    setBarcode( getProductByBarcode(data));
+    /*setBarcode( getProductByBarcode(data));
+    console.log(getProductByBarcode(data));
 
+  };*/
+
+
+  const handleBarcodeScanned = async ({ data }) => {
+    if (scanned) return;
+    setScanned(true);
     
+        try {
+            const productDetails = await getProductByBarcode(data);
+            //setProduct(productDetails);
+            //console.log("Product Found", `Name: ${productDetails.name}\nPrice: ${productDetails.price}`);
+            console.log("Product Found" + JSON.stringify(productDetails));
+            
+          } catch (error) {
+              console.log("Error", "Unable to fetch product details. Please try again." + error);
+          }
+     
     
-
-
   };
+
+
+
+
+
 
   if (hasPermission === null) {
     return (

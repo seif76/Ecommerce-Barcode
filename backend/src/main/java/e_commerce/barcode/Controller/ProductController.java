@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -40,13 +41,17 @@ public class ProductController {
     }*/
 
     @PostMapping("/addProduct")
-    public Products addProduct(@RequestBody Products product) {
-        Category category = categoryRepository.findById(product.getCategory().getCategoryId()).orElse(null);
-        if (category == null) {
-            System.out.println("Category not found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+    public ResponseEntity<?> addProduct(@RequestBody Products product) {
+        if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
+            Optional<Category> categoryOptional = categoryRepository.findById(product.getCategory().getCategoryId());
+            if (categoryOptional.isEmpty()) {
+                return ResponseEntity.badRequest().body("Category not found.");
+            }
+            product.setCategory(categoryOptional.get());
+        } else {
+            product.setCategory(null);
         }
-        product.setCategory(category);
-        return productService.saveProduct(product);
+        Products savedProduct = productService.saveProduct(product);
+        return ResponseEntity.ok(savedProduct);
     }
 }
