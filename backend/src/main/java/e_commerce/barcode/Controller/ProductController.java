@@ -40,16 +40,6 @@ public class ProductController {
         return productService.saveProduct(product);
     }*/
 
-    /*@PostMapping("/addProduct")
-    public Products addProduct(@RequestBody Products product) {
-        Category category = categoryRepository.findById(product.getCategory().getCategoryId()).orElse(null);
-        if (category == null) {
-            System.out.println("Category not found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
-        }
-        product.setCategory(category);
-        return productService.saveProduct(product);
-    }*/
 
     @PostMapping("/addProduct")
     public ResponseEntity<?> addProduct(@RequestBody Products product) {
@@ -62,6 +52,8 @@ public class ProductController {
         } else {
             product.setCategory(null);
         }
+
+
         Products savedProduct = productService.saveProduct(product);
         return ResponseEntity.ok(savedProduct);
     }
