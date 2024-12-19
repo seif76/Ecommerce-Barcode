@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // Base URL for your backend API (replace with your backend URL)
-const API_BASE_URL = "http://192.168.1.11:8081/api/products";
+const API_BASE_URL = "http://192.168.1.9:8081/api/products";
 //http://localhost:8081/api/products/
+//192.168.1.11
 
 // Function to get product details by barcode
 export const getProductByBarcode = async (barcode) => {

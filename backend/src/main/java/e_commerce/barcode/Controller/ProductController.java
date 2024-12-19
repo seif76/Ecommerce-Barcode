@@ -35,12 +35,6 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /*@PostMapping("/add")
-    public Products addProduct(@RequestBody Products product) {
-        return productService.saveProduct(product);
-    }*/
-
-
     @PostMapping("/addProduct")
     public ResponseEntity<?> addProduct(@RequestBody Products product) {
         if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
@@ -52,13 +46,7 @@ public class ProductController {
         } else {
             product.setCategory(null);
         }
-
-
         Products savedProduct = productService.saveProduct(product);
         return ResponseEntity.ok(savedProduct);
     }
-
-
-
-
 }
